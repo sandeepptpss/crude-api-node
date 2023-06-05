@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const cors =require('cors');
 const server = express();
 const productRouter = require('./routes/product')
 const userRouter = require('./routes/user')
@@ -17,9 +17,10 @@ async function main() {
 }
 //Schema
 
-
-
 //bodyParser
+// cors middleware  uses beacuse react and node server is not reflect
+server.use(cors()); 
+
 server.use(express.json());
 server.use(morgan('default'));
 server.use(express.static(process.env.PUBLIC_DIR));
