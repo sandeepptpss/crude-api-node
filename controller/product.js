@@ -1,20 +1,29 @@
 const fs = require('fs');
-// const index = fs.readFileSync('index.html', 'utf-8');
-const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-const products = data.products;
 
 //Create POST /products     C R U D
 //////////////////////////////////////////////////////
-exports.createProduct = (req, res) => {
-  console.log(req.body);
-  products.push(req.body);
-  res.status(201).json(req.body);
+const model = require('../model/product');
+const Product = model.Product;
+
+exports.createProduct = async (req, res) => {
+  const product = await Product(req.body);
+  // product.save();
+  product.save((err,doc)=>{
+    consolelog((err,doc));
+    if(err){
+     res.status(400).json(err);
+
+    }else{
+      res.status(201).json(err);
+    }
+  })
 };
 
 
 // Read GET /products
 exports.getAllProduct = (req, res) => {
-  res.json(products);
+  const product = new Product(req.body);
+  res.json();
 };
 
 // Read GET /products/:id
